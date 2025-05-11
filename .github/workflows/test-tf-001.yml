@@ -48,17 +48,17 @@ jobs:
       - name: 'Terraform init'
         id: init
         run: |
-          cd tf-folder
+          cd ./.github/tf-folder
           terraform init          
 
       - name: 'Terraform plan'
         id: plan
         run: |
-          cd tf-folder
+          cd ./.github/tf-folder
           terraform plan
                     
       - name: 'Terraform apply'
         id: apply
         run: |
-          cd tf-folder
+          cd ./.github/tf-folder
           terraform apply -auto-approve          
