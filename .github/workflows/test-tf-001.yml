@@ -26,35 +26,37 @@ jobs:
     #   ARM_SUBSCRIPTION_ID: ${{ secrets.MVP_SUBSCRIPTION }}
     #   ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
     #cd Subscriptions/Sub-MVP-Sponsorship/rg-connectivity-001
-      
+            
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Step to Checkout your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Terraform installation
+        uses: hashicorp/setup-terraform@v3
+
       # Step to log in to Azure using the Azure CLI GitHub Action
       - name: Log in to Azure CLI
         uses: azure/login@v2
         with: 
-          creds: ${{ secrets.AZURE_CREDENTAILS }}
-      # there is mistake of spelling that was causing issue
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       # Runs a single command using the runners shell
       - name: 'Terraform init'
         id: init
         run: |
-          cd ./.github/tf-folder
+          cd tf-folder
           terraform init          
 
       - name: 'Terraform plan'
         id: plan
         run: |
-          cd ./.github/tf-folder
+          cd tf-folder
           terraform plan
                     
       - name: 'Terraform apply'
         id: apply
         run: |
-          cd ./.github/tf-folder
+          cd tf-folder
           terraform apply -auto-approve          
