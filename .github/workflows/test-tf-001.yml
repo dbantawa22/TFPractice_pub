@@ -19,17 +19,24 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     
-    name: 'rg-connectivity-001'
-    env:
-      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.MVP_SUBSCRIPTION }}
-      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+    # name: 'rg-connectivity-001'
+    # env:
+    #   ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+    #   ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+    #   ARM_SUBSCRIPTION_ID: ${{ secrets.MVP_SUBSCRIPTION }}
+    #   ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      # Step to Checkout your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step to log in to Azure using the Azure CLI GitHub Action
+      - name: Log in to Azure CLI
+        uses: azure/login@v2
+        with: 
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       # Runs a single command using the runners shell
       - name: 'Terraform init'
