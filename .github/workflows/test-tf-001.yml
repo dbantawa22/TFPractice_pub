@@ -54,11 +54,13 @@ jobs:
       - name: 'Terraform plan'
         id: plan
         run: |
+          az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.TENANT_ID }}
           cd ./.github/tf-folder
           terraform plan
                     
       - name: 'Terraform apply'
         id: apply
         run: |
+          az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.TENANT_ID }}
           cd ./.github/tf-folder
           terraform apply -auto-approve          
